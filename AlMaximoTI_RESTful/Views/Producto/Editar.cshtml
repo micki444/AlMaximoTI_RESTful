@@ -1,0 +1,147 @@
+﻿@model Producto
+
+@{
+    ViewData["Title"] = "Editar Producto";
+}
+
+<div class="text-center">
+    <h1 class="display-4">AlMaximoTI : Miguel Ángel</h1>
+    <p>Únete a nuestro <a href="http://www.almaximoti.com/Sitio/index.html">centro de alto rendimiento</a>.</p>
+</div>
+<div class="row justify-content-center">
+    <div class="col-10">
+        <div class="alert alert-info" role="alert">
+            Editar Producto
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                AlMaximoTI : Editar Producto
+            </div>
+            <div class="card-body">
+                <form method="post" id="formEditarProducto">
+                    <input type="hidden" id="productoId" value="@Model.Id" />
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="txtClave" class="form-label">Clave</label>
+                            <input asp-for="Clave" class="form-control" id="txtClave" name="Clave" />
+                            <span asp-validation-for="Clave" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="txtNombre" class="form-label">Nombre</label>
+                            <input asp-for="Nombre" class="form-control" id="txtNombre" name="Nombre" />
+                            <span asp-validation-for="Nombre" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="tipo" class="form-label">Tipo</label>
+                            <select class="form-control" id="tipo" name="TipoProductoId" required asp-items="ViewBag.TipoProductos">
+                                <option value="" disabled>Seleccione Tipo de Producto</option>
+                                <!-- Opciones -->
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="txtPrecio" class="form-label">Precio</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input asp-for="Precio" id="txtPrecio" name="Precio" class="form-control" />
+                                <span asp-validation-for="Precio" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input asp-for="EsActivo" class="form-check-input" type="checkbox" id="esActivo" name="EsActivo" />
+                        <label for="esActivo" class="form-check-label">Activo</label>
+                        <span asp-validation-for="EsActivo" class="text-danger"></span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-primary boton-guardar-cambios-producto">Actualizar</button>
+                        <a href="/Producto/Index" class="btn btn-secondary">Regresar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <h2>Proveedores</h2>
+            <div class="card-header">
+                AlMaximoTI : Proveedores
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered" id="tablaProductoProveedor">
+                    <thead>
+                        <tr>
+                            <th>Proveedor</th>
+                            <th>Clave</th>
+                            <th>Costo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var proveedor in Model.Proveedores)
+                        {
+                            <tr>
+                                <td>@proveedor.refProveedor.Nombre</td>
+                                <td>@proveedor.ClaveProveedor</td>
+                                <td>@proveedor.Costo</td>
+                                <td>
+                                    <button class="btn btn-primary" onclick="editarProveedor(@proveedor.refProveedor.Id)">Editar</button>
+                                    <button class="btn btn-danger" onclick="eliminarProveedor(@proveedor.refProveedor.Id)">Eliminar</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <button class="btn btn-success" onclick="agregarProveedorModal()">Agregar Proveedor</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modalProveedores" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #5bc0de; color: white;">
+                <h5 class="modal-title" id="exampleModalLabel">AlMaximoTI : Proveedores</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: red;"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="cboProveedores" class="form-label">Proveedor</label>
+                    <select class="form-control" id="cboProveedores" name="cboProveedores" required">
+                        <option value="" disabled selected>Seleccione el proveedor</option>
+                        <!-- Opciones -->
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="txtClaveProveedor" class="form-label">Clave</label>
+                    <input type="text" class="form-control" id="txtClaveProveedor" name="ClaveProveedor" placeholder="Ej: PROD001" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="txtCostoProveedor" class="form-label">Costo</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="number" class="form-control" id="txtCostoProveedor" name="CostoProveedor" />
+                        <span class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary boton-guardar-cambios-proveedor">Agregar proveedor</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/crear.js"></script>
+    <script src="~/js/proveedor.js"></script>
+
+}

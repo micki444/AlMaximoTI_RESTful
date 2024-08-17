@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Productos";
+}
+
+<div class="text-center">
+    <h1 class="display-4">AlMaximoTI : Miguel Ángel</h1>
+    <p>Únete a nuestro <a href="http://www.almaximoti.com/Sitio/index.html">centro de alto rendimiento</a>.</p>
+</div>
+<div class="row justify-content-center">
+    <div class="col-10">
+        <div class="alert alert-info" role="alert">
+            Productos
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                AlMaximoTI : Productos
+            </div>
+            <form method="get" id="searchForm" class="mb-4">
+                <input type="text" id="clave" name="clave" class="form-control-sm" placeholder="Clave" />
+                <select id="cboTipo" name="tipo" class="form-control-sm">
+                    <option value="" disabled selected>Seleccione Tipo de Producto</option>
+                    <!-- Otras opciones aquí -->
+                </select>
+                <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+            </form>
+
+            <button type="button" class="btn btn-success btn-sm boton-nuevo-producto">Agregar Producto</button>
+            <div class="card-body">
+                <table class="table table-bordered" id="tablaProductos">
+                    <thead>
+                        <tr>
+                            <th>Clave</th>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Activo</th>
+                            <th>Precio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Aquí se llenará dinámicamente con JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/index.js"></script>
+    <script src="~/js/crear.js"></script>
+
+}
