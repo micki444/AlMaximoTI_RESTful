@@ -13,6 +13,45 @@ namespace AlMaximoTI_RESTful.Repositorios.Implementacion
         {
             _conexion = configuration.GetConnectionString("conexion");
         }
+
+        public async Task<Producto> ObtenerPorId(int id)
+        {
+            Producto producto = null;
+
+            using (var conexion = new SqlConnection(_conexion))
+            {
+                await conexion.OpenAsync();
+                SqlCommand cmd = new SqlCommand("sp_ObtenerProductoPorId", conexion)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("@Id", id);
+
+                using (var dr = await cmd.ExecuteReaderAsync())
+                {
+                    if (await dr.ReadAsync())
+                    {
+                        producto = new Producto
+                        {
+                            Id = Convert.ToInt32(dr["Id"]),
+                            Clave = dr["Clave"].ToString(),
+                            Nombre = dr["Nombre"].ToString(),
+                            refTipoProducto = new Models.TipoProducto
+                            {
+                                Id = Convert.ToInt32(dr["TipoId"]),
+                                Nombre = dr["TipoNombre"].ToString(),
+                            },
+                            EsActivo = Convert.ToBoolean(dr["EsActivo"]),
+                            Precio = Convert.ToDecimal(dr["Precio"]),
+                            Proveedores = new List<ProductoProveedor>()
+                        };
+                    }
+                }
+            }
+
+            return producto;
+        }
+
         public async Task<List<Producto>> ObtenerTodos()
         {
             List<Producto> _lista = new List<Producto>();
@@ -150,49 +189,16 @@ namespace AlMaximoTI_RESTful.Repositorios.Implementacion
 
                 int filas_afectadas = await cmd.ExecuteNonQueryAsync();
 
-                return true;
+                return filas_afectadas > 0;
             }
-        }
-
-        public async Task<Producto> ObtenerPorId(int id)
-        {
-            Producto producto = null;
-
-            using (var conexion = new SqlConnection(_conexion))
-            {
-                await conexion.OpenAsync();
-                SqlCommand cmd = new SqlCommand("sp_ObtenerProductoPorId", conexion)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                cmd.Parameters.AddWithValue("@Id", id);
-
-                using (var dr = await cmd.ExecuteReaderAsync())
-                {
-                    if (await dr.ReadAsync())
-                    {
-                        producto = new Producto
-                        {
-                            Id = Convert.ToInt32(dr["Id"]),
-                            Clave = dr["Clave"].ToString(),
-                            Nombre = dr["Nombre"].ToString(),
-                            refTipoProducto = new Models.TipoProducto
-                            {
-                                Id = Convert.ToInt32(dr["TipoId"]),
-                                Nombre = dr["TipoNombre"].ToString(),
-                            },
-                            EsActivo = Convert.ToBoolean(dr["EsActivo"]),
-                            Precio = Convert.ToDecimal(dr["Precio"]),
-                            Proveedores = new List<ProductoProveedor>()
-                        };
-                    }
-                }
-            }
-
-            return producto;
         }
 
         public Task<List<Producto>> ObtenerTodos(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Eliminar(int productoId, int proveedorId)
         {
             throw new NotImplementedException();
         }

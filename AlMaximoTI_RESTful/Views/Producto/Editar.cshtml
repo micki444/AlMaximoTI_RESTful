@@ -1,5 +1,4 @@
 ﻿@model Producto
-
 @{
     ViewData["Title"] = "Editar Producto";
 }
@@ -38,14 +37,13 @@
                             <label for="tipo" class="form-label">Tipo</label>
                             <select class="form-control" id="tipo" name="TipoProductoId" required asp-items="ViewBag.TipoProductos">
                                 <option value="" disabled>Seleccione Tipo de Producto</option>
-                                <!-- Opciones -->
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label for="txtPrecio" class="form-label">Precio</label>
                             <div class="input-group">
                                 <span class="input-group-text">$</span>
-                                <input asp-for="Precio" id="txtPrecio" name="Precio" class="form-control" />
+                                <input asp-for="Precio" min="1" id="txtPrecio" name="Precio" class="form-control" />
                                 <span asp-validation-for="Precio" class="text-danger"></span>
                             </div>
                         </div>
@@ -62,7 +60,6 @@
                 </form>
             </div>
         </div>
-
         <div class="card mt-4">
             <h2>Proveedores</h2>
             <div class="card-header">
@@ -86,8 +83,8 @@
                                 <td>@proveedor.ClaveProveedor</td>
                                 <td>@proveedor.Costo</td>
                                 <td>
-                                    <button class="btn btn-primary" onclick="editarProveedor(@proveedor.refProveedor.Id)">Editar</button>
-                                    <button class="btn btn-danger" onclick="eliminarProveedor(@proveedor.refProveedor.Id)">Eliminar</button>
+                                    <button class="btn btn-primary btn-sm boton-editar-proveedor" data-proveedor='@Html.Raw(Json.Serialize(proveedor))'>Editar</button>
+                                    <button class="btn btn-danger btn-sm ms-2 boton-eliminar-proveedor" data-proveedor='@Html.Raw(Json.Serialize(proveedor))'>Eliminar</button>
                                 </td>
                             </tr>
                         }
@@ -98,6 +95,7 @@
         </div>
     </div>
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="modalProveedores" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -111,7 +109,6 @@
                     <label for="cboProveedores" class="form-label">Proveedor</label>
                     <select class="form-control" id="cboProveedores" name="cboProveedores" required">
                         <option value="" disabled selected>Seleccione el proveedor</option>
-                        <!-- Opciones -->
                     </select>
                 </div>
                 <div class="mb-3">
@@ -123,14 +120,14 @@
                     <label for="txtCostoProveedor" class="form-label">Costo</label>
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" id="txtCostoProveedor" name="CostoProveedor" />
+                        <input type="number" min="1" class="form-control" id="txtCostoProveedor" name="CostoProveedor" />
                         <span class="text-danger"></span>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary boton-guardar-cambios-proveedor">Agregar proveedor</button>
+                <button type="button" class="btn btn-primary boton-guardar-cambios-proveedor">Guardar</button>
             </div>
         </div>
     </div>
@@ -141,7 +138,7 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script src="~/js/crear.js"></script>
+    <script src="~/js/producto.js"></script>
     <script src="~/js/proveedor.js"></script>
 
 }

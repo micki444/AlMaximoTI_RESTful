@@ -55,7 +55,7 @@ namespace AlMaximoTI_RESTful.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> editarEmpleado([FromBody] ProductoProveedor modelo)
+        public async Task<IActionResult> Actualizar([FromBody] ProductoProveedor modelo)
         {
             bool _resultado = await _productoProveedorRepository.Editar(modelo);
 
@@ -65,7 +65,22 @@ namespace AlMaximoTI_RESTful.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { valor = _resultado, msg = "errror" });
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> Eliminar(int productoId, int proveedorId)
+        {
+            bool _resultado = await _productoProveedorRepository.Eliminar(productoId, proveedorId);
 
+            if (_resultado) 
+            { 
+                return StatusCode(StatusCodes.Status200OK, new { valor = _resultado, msg = "ok" }); 
+            }
+
+            else 
+            { 
+                return StatusCode(StatusCodes.Status500InternalServerError, new { valor = _resultado, msg = "errror" }); 
+            }
+
+        }
 
     }
 }

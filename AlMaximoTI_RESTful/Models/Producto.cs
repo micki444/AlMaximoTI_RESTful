@@ -9,5 +9,6 @@
         public bool EsActivo { get; set; }
         public decimal Precio { get; set; }
         public List<ProductoProveedor> Proveedores { get; set; }
+
     }
 }

@@ -29,6 +29,12 @@ namespace AlMaximoTI_RESTful.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Crear()
+        {
+            ViewBag.TipoProductos = new SelectList(await _tipoProductoRepository.ObtenerTodos(), "Id", "Nombre");
+            return View();
+        }
+
         public async Task<IActionResult> Editar(int id)
         {
             var producto = await _productoRepository.ObtenerPorId(id);
@@ -64,12 +70,6 @@ namespace AlMaximoTI_RESTful.Controllers
             return StatusCode(StatusCodes.Status200OK, _lista);
         }
 
-        public async Task<IActionResult> Crear()
-        {
-            ViewBag.TipoProductos = new SelectList(await _tipoProductoRepository.ObtenerTodos(), "Id", "Nombre");
-            return View();
-        }
-
         [HttpPost]
         public async Task<IActionResult> Guardar([FromBody] Producto producto)
         {
@@ -80,8 +80,6 @@ namespace AlMaximoTI_RESTful.Controllers
             else
                 return StatusCode(StatusCodes.Status500InternalServerError, new { valor = _resultado, msg = "error" });
         }
-
-        
 
         [HttpPut]
         public async Task<IActionResult> Actualizar([FromBody] Producto modelo)
@@ -104,7 +102,6 @@ namespace AlMaximoTI_RESTful.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { valor = _resultado, msg = "error" });
             }
         }
-
 
         [HttpDelete]
         public async Task<IActionResult> EliminarProducto(int id)

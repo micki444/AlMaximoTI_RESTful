@@ -20,11 +20,9 @@
                 <input type="text" id="clave" name="clave" class="form-control-sm" placeholder="Clave" />
                 <select id="cboTipo" name="tipo" class="form-control-sm">
                     <option value="" disabled selected>Seleccione Tipo de Producto</option>
-                    <!-- Otras opciones aquí -->
                 </select>
                 <button type="submit" class="btn btn-primary mb-2">Buscar</button>
             </form>
-
             <button type="button" class="btn btn-success btn-sm boton-nuevo-producto">Agregar Producto</button>
             <div class="card-body">
                 <table class="table table-bordered" id="tablaProductos">
@@ -39,7 +37,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Aquí se llenará dinámicamente con JavaScript -->
                     </tbody>
                 </table>
             </div>
@@ -49,6 +46,5 @@
 
 @section Scripts {
     <script src="~/js/index.js"></script>
-    <script src="~/js/crear.js"></script>
-
+    <script src="~/js/producto.js"></script>
 }

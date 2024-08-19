@@ -1,5 +1,5 @@
 ﻿let _modeloProducto = {
-    id: 0, // Cambiado de idProducto a id
+    id: 0,
     clave: "",
     nombre: "",
     refTipoProducto: {
@@ -9,8 +9,6 @@
     esActivo: false,
     precio: 0.0
 };
-
-
 
 $(document).on("click", ".boton-eliminar-producto", function () {
     const _producto = $(this).data("producto");
@@ -47,7 +45,6 @@ $(document).on("click", ".boton-eliminar-producto", function () {
         }
     });
 });
-
 
 $(document).on("click", ".boton-nuevo-producto", function () {
     try {
@@ -91,7 +88,7 @@ $(document).on("click", ".boton-editar-producto", function () {
             precio: _producto.precio
         };
 
-        // Redirigir a la página de edición del producto
+       
         window.location.assign(`/Producto/Editar/${_producto.id}`);
     } catch (error) {
         console.error("Error al redirigir a la página de edición del producto:", error);
@@ -99,16 +96,14 @@ $(document).on("click", ".boton-editar-producto", function () {
     }
 });
 
-
-
 $(document).on("click", ".boton-guardar-cambios-producto", function (e) {
-    e.preventDefault(); // Evita el envío predeterminado del formulario
+    e.preventDefault();
 
     const idProducto = parseInt($("#productoId").val(), 10);
     console.log("id desde el formulario:", idProducto);
 
     const _modelo = {
-        id: idProducto, // Cambiado de idProducto a id
+        id: idProducto, 
         clave: $("#txtClave").val(),
         nombre: $("#txtNombre").val(),
         refTipoProducto: {

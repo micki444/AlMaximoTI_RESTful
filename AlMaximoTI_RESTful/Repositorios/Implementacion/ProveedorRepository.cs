@@ -98,7 +98,9 @@ public class ProveedorRepository : IGenericRepository<Proveedor>
         return _lista;
     }
 
-   
-
+    public Task<bool> Eliminar(int productoId, int proveedorId)
+    {
+        throw new NotImplementedException();
+    }
 }
 

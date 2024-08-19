@@ -14,31 +14,6 @@ namespace AlMaximoTI_RESTful.Repositorios.Implementacion
             _conexion = configuration.GetConnectionString("conexion");
         }
 
-        public Task<bool> Agregar(TipoProducto modelo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<TipoProducto>> Buscar(string clave, string tipo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> Editar(TipoProducto modelo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> Eliminar(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<TipoProducto> ObtenerPorId(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<List<TipoProducto>> ObtenerTodos()
         {
             List<TipoProducto> _lista = new List<TipoProducto>();
@@ -69,6 +44,36 @@ namespace AlMaximoTI_RESTful.Repositorios.Implementacion
             }
 
             return _lista;
+        }
+
+        public Task<bool> Agregar(TipoProducto modelo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<TipoProducto>> Buscar(string clave, string tipo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Editar(TipoProducto modelo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Eliminar(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Eliminar(int productoId, int proveedorId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TipoProducto> ObtenerPorId(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<List<TipoProducto>> ObtenerTodos(int id)
